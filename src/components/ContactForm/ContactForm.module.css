@@ -1,0 +1,41 @@
+.FormContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.Input {
+  padding: 10px;
+  margin: 5px 0 #fff;
+  border: 1px solid;
+  min-width: 200px;
+  min-height: 15px;
+  border-radius: 5px;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.Input:hover,
+.Input:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.SubmitButton {
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #6f42c1; /* Бордер */
+  border-radius: 5px;
+  outline: none;
+  background-color: #6f42c1;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.SubmitButton:hover {
+  background-color: #824cc1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
