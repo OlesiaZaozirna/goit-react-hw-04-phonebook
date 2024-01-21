@@ -1,54 +1,48 @@
-import { Component } from 'react';
+import { useState } from 'react';
+import { nanoid } from 'nanoid';
 import css from "./ContactForm.module.css"
 
-class ContactForm extends Component {
-  state = {
+const ContactForm = ({handleAddContact})=> {
+ const [formData, setFormData] = useState ({
     name: '',
     number: '',
-  };
+  });
 
-
-  handleSubmit = e => {
+  const { name, number } = formData;
+  
+  const handleSubmit = e => {
     e.preventDefault();
     
-    if (!this.validateName(this.state.name)) {
+    if (!validateName(name)) {
       alert('Please enter a valid name');
       return;
     }
 
-    if (!this.validateNumber(this.state.number)) {
+    if (!validateNumber(number)) {
       alert('Please enter a valid phone number');
       return;
     }
 
-    const formData = {
-      name: this.state.name,
-      number: this.state.number,
-    };
+    const newContact = { ...formData, id: nanoid() };
 
-    this.props.handleAddContact(formData);
-    this.setState({
-      name: '',
-      number: '',
-    });
-  };
-
-  handleChange = e => {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
+    handleAddContact(newContact);
+    setFormData({ name: '', number: '' });
   };
   
-  validateName = name => /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/.test(name);
 
-  validateNumber = number =>
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({ ...prevData, [name]: value }));
+  };
+  
+  const validateName = name => /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/.test(name);
+
+  const validateNumber = number =>
     /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/.test(number);
 
-  render() {
-    return (
+      return (
       <div >
-        <form className={css.FormContainer} onSubmit={this.handleSubmit}>
+        <form className={css.FormContainer} onSubmit={handleSubmit}>
           <label htmlFor="name">Name</label>
           <input className={css.Input}
             type="text"
@@ -56,8 +50,8 @@ class ContactForm extends Component {
             name="name"
             id="name"
             required
-            value={this.state.name}
-            onChange={this.handleChange}
+            value={name}
+            onChange={handleChange}
           />
 
           <label htmlFor="number">Number</label>
@@ -67,8 +61,8 @@ class ContactForm extends Component {
             name="number"
             id="number"
             required
-            value={this.state.number}
-            onChange={this.handleChange}
+            value={number}
+            onChange={handleChange}
           />
 
           <button className={css.SubmitButton} type="submit">Add contact</button>
@@ -76,7 +70,7 @@ class ContactForm extends Component {
       </div>
     );
   }
-}
+
 
 
 export default ContactForm;
